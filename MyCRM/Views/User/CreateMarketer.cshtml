@@ -1,0 +1,111 @@
+﻿@using MyCRM.Domain.Entities.Account
+@model MyCRM.Domain.ViewModel.User.AddMarketerViewModel
+@{
+    ViewData["Title"] = "ثبت بازاریاب";
+}
+
+
+    <!-- Vertical Layout -->
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+                <div class="header">
+                    <h2>چیدمان <strong>عمودی</strong></h2>
+                    <ul class="header-dropdown">
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="javascript:void(0);">عملیات</a></li>
+                                <li><a href="javascript:void(0);">عملیات دیگر</a></li>
+                                <li><a href="javascript:void(0);">یک چیز دیگر</a></li>
+                            </ul>
+                        </li>
+                        <li class="remove">
+                            <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    <form method="post" enctype="multipart/form-data " >
+                        <div class="row clearfix">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="UserName "></label>
+                                    <input type="text" class="form-control" asp-for="UserName" placeholder="نام کاربری">
+                                    <span class="text-danger" asp-validation-for="UserName"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Password "></label>
+                                    <input type="password" class="form-control" asp-for="Password" placeholder="رمز">
+                                    <span class="text-danger" asp-validation-for="Password"></span>
+                                </div>
+
+                                <div class="row clearfix">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Email "></label>
+                                            <input type="text" class="form-control" asp-for="Email" placeholder="ایمیل">
+                                            <span class="text-danger" asp-validation-for="Email"></span>
+                                        </div>
+                                    </div>
+                               
+
+                                    <div class="row clearfix">
+                                <div class="form-group">
+                                    <label asp-for="FirstName "></label>
+                                    <input type="text" class="form-control" asp-for="FirstName" placeholder="نام">
+                                            <span class="text-danger" asp-validation-for="FirstName"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LastName"></label>
+                                    <input type="text" class="form-control" asp-for="LastName" placeholder="نام خانوادگی">
+                                            <span class="text-danger" asp-validation-for="LastName"></span>
+                                </div>
+                          </div>
+
+                                <div class="form-group">
+                                    <label> سن </label>
+                                    <input type="text" class="form-control" asp-for="Age" placeholder="سن">
+                                </div>
+                                    <div class="form-group">
+                                        <label asp-for="MobilePhone"></label>
+                                        <input type="text" class="form-control" asp-for="MobilePhone" placeholder="شماره تماس">
+                                        <span class="text-danger" asp-validation-for="MobilePhone"></span>
+                                    </div>
+                         </div>
+
+                         <div class="row clearfix">
+                                <div class="form-group">
+                                    <label asp-for="IrCode "></label>
+                                    <input type="text" class="form-control" asp-for="IrCode" placeholder="کدملی">
+                                        <span class="text-danger" asp-validation-for="IrCode"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label > تحصیلات </label>
+                                    <select asp-for="MarketerEducation" asp-items="@Html.GetEnumSelectList<Education>() "></select>
+                                </div>
+                         </div>
+
+                        <div class="row clearfix">
+                                <div class="form-group">
+                                    <label> تصویر</label>
+                                    <input type="file" class="form-control" asp-for="ImageFile" placeholder="تصویر">
+                                </div>
+                        </div>
+
+                            </div>                           
+                        </div>
+                        <button type="submit" class="btn btn-raised btn-primary btn-round waves-effect">ذخیره</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #END# Vertical Layout -->
+ 
+
+
+@section Custom_js
+ {
+    <partial name="_JqueryValidation"></partial>
+ }

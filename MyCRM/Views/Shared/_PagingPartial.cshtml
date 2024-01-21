@@ -1,0 +1,29 @@
+﻿@using MyCRM.Domain.ViewModel.Paging
+
+@model BasePaging
+
+
+<ul class="pagination pagination-primary m-t-20">
+
+    @if(Model.StartPage != Model.PageId)
+    {
+        <li class="page-item"><a class="page-link" onclick="fillPageId(@Model.PageId -1)">قبلی</a></li>
+    }
+
+    @for(int i = Model.StartPage; i <= Model.EndPage; i++)
+    {
+        if(i == Model.PageId)
+        {
+            <li class="page-item active"><a class="page-link" onclick="fillPageId(@i)">@i</a></li>
+        }
+        else
+        {
+            <li class="page-item"><a class="page-link" @* onclick="fillPageId(@i)" *@>@i</a></li>
+        }
+    }
+
+    @if (Model.PageId != Model.EndPage)
+    {
+        <li class="page-item"><a class="page-link" onclick="fillPageId(@Model.PageId + 1)">بعدی</a></li>
+    }
+</ul>
