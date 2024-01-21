@@ -1,0 +1,40 @@
+﻿
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('پیام موفقیت', "@TempData["SuccessMessage"]", 'success');
+        })
+    </script>
+}
+
+
+@if (TempData["WarningMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('هشدار', "@TempData["WarningMessage"]", 'Warning');
+        })
+    </script>
+}
+
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('خطا', "@TempData["ErrorMessage"]", 'Error');
+        })
+    </script>
+}
+
+
+@if (TempData["InfoMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('اطلاعات', "@TempData["InfoMessage"]", 'Info');
+        })
+    </script>
+}

@@ -4,7 +4,7 @@ using MyCRM.Domain.ViewModel.User;
 
 namespace MyCRM.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly IUserService _userServices;
 
@@ -49,8 +49,10 @@ namespace MyCRM.Controllers
             switch (result)
             {
                 case AddMarketerResult.Success:
+                    TempData[SuccessMessage] = "موفقیت";
                     return RedirectToAction("Index");
                 case AddMarketerResult.Fail:
+                    TempData[WarningMessage] = "خطا";   
                     ModelState.AddModelError("UserName", "مشکلی در ثبت اطلاعات می باشد...");
                     break;
             }

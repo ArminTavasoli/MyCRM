@@ -6,6 +6,9 @@ using MyCRM.Data.DbContexts;
 using MyCRM.Data.Repository;
 using MyCRM.Domain.Interfaces;
 using MyCRM.IoC;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,12 +16,19 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-
+#region Dependensi Injection
+//User Repository
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
+//User Service
 builder.Services.AddTransient<IUserService, UserServices>();
+#endregion
 
-
+#region Encoder
+//???? ????? ???? ???? ?????????
+builder.Services.AddSingleton<HtmlEncoder>(
+    HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
+#endregion
 
 //DbContext
 #region DbContext
