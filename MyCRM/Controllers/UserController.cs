@@ -37,17 +37,17 @@ namespace MyCRM.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMarketer(AddMarketerViewModel addMarketer)
+        public async Task<IActionResult> CreateMarketer(AddMarketerViewModel addMarketer , IFormFile imageProfile)
         {
             if (!ModelState.IsValid)
             {
                 return View(addMarketer);
             }
 
-            var result = await _userServices.AddMarketer(addMarketer);
+            var result = await _userServices.AddMarketer(addMarketer , imageProfile);
 
             switch (result)
-            {
+            { 
                 case AddMarketerResult.Success:
                     TempData[SuccessMessage] = "موفقیت";
                     return RedirectToAction("Index");

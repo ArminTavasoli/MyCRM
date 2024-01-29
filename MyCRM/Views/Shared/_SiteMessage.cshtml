@@ -1,6 +1,4 @@
-﻿
-
-@if (TempData["SuccessMessage"] != null)
+﻿@if (TempData["SuccessMessage"] != null)
 {
     <script>
         $(document).ready(function () {
@@ -8,33 +6,27 @@
         })
     </script>
 }
-
-
 @if (TempData["WarningMessage"] != null)
 {
     <script>
         $(document).ready(function () {
-            ShowMessage('هشدار', "@TempData["WarningMessage"]", 'Warning');
+            ShowMessage('پیام اخطار', "@TempData["WarningMessage"]", 'warning');
         })
     </script>
 }
-
-
 @if (TempData["ErrorMessage"] != null)
 {
     <script>
         $(document).ready(function () {
-            ShowMessage('خطا', "@TempData["ErrorMessage"]", 'Error');
+            ShowMessage('پیام خطا', "@TempData["ErrorMessage"]", 'error');
         })
     </script>
 }
-
-
 @if (TempData["InfoMessage"] != null)
 {
     <script>
         $(document).ready(function () {
-            ShowMessage('اطلاعات', "@TempData["InfoMessage"]", 'Info');
+            ShowMessage('پیام اطلاعیه', "@TempData["InfoMessage"]", 'info');
         })
     </script>
 }

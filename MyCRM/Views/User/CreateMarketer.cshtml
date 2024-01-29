@@ -85,18 +85,21 @@
                                     <select asp-for="MarketerEducation" asp-items="@Html.GetEnumSelectList<Education>() "></select>
                                 </div>
                          </div>
+                            <div class="col-md-6">
 
-                        <div class="row clearfix">
-                                <div class="form-group">
-                                    <label> تصویر</label>
-                                    <input type="file" class="form-control" asp-for="ImageFile" placeholder="تصویر">
+                                <label for="MainImage">
+                                    <span type="button" class="btn btn-info">انتخاب عکس</span>
+                                </label>
+                                <input ImageInput="1" name="imageProfile" type="file" id="MainImage" class="d-none"/>  
+                            </div>
+                                <div class="col-md-5">
+                                    <img ImageFile="1" src=""/>
                                 </div>
-                        </div>
 
-                            </div>                           
-                        </div>
-                        <button type="submit" class="btn btn-raised btn-primary btn-round waves-effect">ذخیره</button>
-                    </form>
+                                </div>                           
+                            </div>
+                            <button type="submit" class="btn btn-raised btn-primary btn-round waves-effect">ذخیره</button>
+                        </form>
                 </div>
             </div>
         </div>
