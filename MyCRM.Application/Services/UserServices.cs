@@ -1,4 +1,8 @@
-﻿using MyCRM.Application.Interfaces;
+﻿using Microsoft.AspNetCore.Http;
+using MyCRM.Application.Extensions;
+using MyCRM.Application.Interfaces;
+using MyCRM.Application.Security;
+using MyCRM.Application.StaticTools;
 using MyCRM.Domain.Entities.Account;
 using MyCRM.Domain.Interfaces;
 using MyCRM.Domain.ViewModel.User;
@@ -21,8 +25,21 @@ namespace MyCRM.Application.Services
 
 
         
-        public async Task<AddMarketerResult> AddMarketer(AddMarketerViewModel marketer)
+        public async Task<AddMarketerResult> AddMarketer(AddMarketerViewModel marketer , IFormFile imageProfile)
         {
+            //Upload Image
+            var imageProfileName = "";
+
+            imageProfileName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(imageProfile.FileName);
+            imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
+
+            /*            if(imageProfile.Length>0)
+                        {
+                            imageProfileName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(imageProfile.FileName);
+                            imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
+                        }*/
+
+
             //Add User
             var user = new User()
             {
@@ -34,6 +51,11 @@ namespace MyCRM.Application.Services
                 MobilePhone = marketer.MobilePhone,
                 IntroduceName = marketer.IntroduceName,
             };
+
+            if (!string.IsNullOrEmpty(imageProfileName))
+            {
+                user.ImageName = imageProfileName;
+            }
 
             await _userRepositort.AddUser(user);
             await _userRepositort.SaveChangesAsync();
@@ -56,6 +78,7 @@ namespace MyCRM.Application.Services
             return AddMarketerResult.Success;
             
         }
+
 
         public async Task<FilterUserViewModel> Filter(FilterUserViewModel filter)
         {

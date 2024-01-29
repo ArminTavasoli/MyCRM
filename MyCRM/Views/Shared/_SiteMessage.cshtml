@@ -1,0 +1,32 @@
+﻿@if (TempData["SuccessMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('پیام موفقیت', "@TempData["SuccessMessage"]", 'success');
+        })
+    </script>
+}
+@if (TempData["WarningMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('پیام اخطار', "@TempData["WarningMessage"]", 'warning');
+        })
+    </script>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('پیام خطا', "@TempData["ErrorMessage"]", 'error');
+        })
+    </script>
+}
+@if (TempData["InfoMessage"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            ShowMessage('پیام اطلاعیه', "@TempData["InfoMessage"]", 'info');
+        })
+    </script>
+}
