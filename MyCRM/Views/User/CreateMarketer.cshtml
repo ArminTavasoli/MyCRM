@@ -5,110 +5,94 @@
 }
 
 
-    <!-- Vertical Layout -->
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-                <div class="header">
-                    <h2>چیدمان <strong>عمودی</strong></h2>
-                    <ul class="header-dropdown">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="javascript:void(0);">عملیات</a></li>
-                                <li><a href="javascript:void(0);">عملیات دیگر</a></li>
-                                <li><a href="javascript:void(0);">یک چیز دیگر</a></li>
-                            </ul>
-                        </li>
-                        <li class="remove">
-                            <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="body">
-                    <form method="post" enctype="multipart/form-data " >
-                        <div class="row clearfix">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label asp-for="UserName "></label>
-                                    <input type="text" class="form-control" asp-for="UserName" placeholder="نام کاربری">
-                                    <span class="text-danger" asp-validation-for="UserName"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="Password "></label>
-                                    <input type="password" class="form-control" asp-for="Password" placeholder="رمز">
-                                    <span class="text-danger" asp-validation-for="Password"></span>
-                                </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">فیلتر</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
+                    <form method="post" enctype="multipart/form-data" id="filter-search">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label asp-for="UserName"> </label>
+                                <input asp-for="UserName" class="form-control">
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Password"></label>
+                                <input asp-for="Password" class="form-control">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="FirstName"></label>
+                                <input asp-for="FirstName" class="form-control">
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="LastName"></label>
+                                <input asp-for="LastName" class="form-control">
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" class="form-control">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="MobilePhone"></label>
+                                <input asp-for="MobilePhone" class="form-control">
+                                <span asp-validation-for="MobilePhone" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="IntroduceName"></label>
+                                <input asp-for="IntroduceName" class="form-control">
+                                <span asp-validation-for="IntroduceName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label asp-for="FieldStudy"></label>
+                                <input asp-for="FieldStudy" class="form-control">
+                                <span asp-validation-for="FieldStudy" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>سن</label>
+                                <input asp-for="Age" value="0" class="form-control">
+                                <span asp-validation-for="Age" class="text-danger"></span>
+                            </div>
 
-                                <div class="row clearfix">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label asp-for="Email "></label>
-                                            <input type="text" class="form-control" asp-for="Email" placeholder="ایمیل">
-                                            <span class="text-danger" asp-validation-for="Email"></span>
-                                        </div>
-                                    </div>
-                               
+                            <div class="form-group col-md-6">
+                                <label asp-for="IrCode"></label>
+                                <input asp-for="IrCode" class="form-control">
+                                <span asp-validation-for="IrCode" class="text-danger"></span>
+                            </div>
 
-                                    <div class="row clearfix">
-                                <div class="form-group">
-                                    <label asp-for="FirstName "></label>
-                                    <input type="text" class="form-control" asp-for="FirstName" placeholder="نام">
-                                            <span class="text-danger" asp-validation-for="FirstName"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label asp-for="LastName"></label>
-                                    <input type="text" class="form-control" asp-for="LastName" placeholder="نام خانوادگی">
-                                            <span class="text-danger" asp-validation-for="LastName"></span>
-                                </div>
-                          </div>
+                            <div class="form-group col-md-6">
+                                <label>مدرک تحصیلی</label>
+                                <select class="form-control" asp-for="MarketerEducation" asp-items="@Html.GetEnumSelectList<Education>()"></select>
+                                <span asp-validation-for="MarketerEducation" class="text-danger"></span>
+                            </div>
 
-                                <div class="form-group">
-                                    <label> سن </label>
-                                    <input type="text" class="form-control" asp-for="Age" placeholder="سن">
-                                </div>
-                                    <div class="form-group">
-                                        <label asp-for="MobilePhone"></label>
-                                        <input type="text" class="form-control" asp-for="MobilePhone" placeholder="شماره تماس">
-                                        <span class="text-danger" asp-validation-for="MobilePhone"></span>
-                                    </div>
-                         </div>
-
-                         <div class="row clearfix">
-                                <div class="form-group">
-                                    <label asp-for="IrCode "></label>
-                                    <input type="text" class="form-control" asp-for="IrCode" placeholder="کدملی">
-                                        <span class="text-danger" asp-validation-for="IrCode"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label > تحصیلات </label>
-                                    <select asp-for="MarketerEducation" asp-items="@Html.GetEnumSelectList<Education>() "></select>
-                                </div>
-                         </div>
-                            <div class="col-md-6">
-
-                                <label for="MainImage">
-                                    <span type="button" class="btn btn-info">انتخاب عکس</span>
+                            <div class="form-group col-md-12">
+                                <label for="imageProfile" class="btn btn-primary">
+                                    <span>تصویر پروفایل</span>
                                 </label>
-                                <input ImageInput="1" name="imageProfile" type="file" id="MainImage" class="d-none"/>  
+                                <input ImageInput="1" type="file" name="imageProfile" id="imageProfile" class="d-none" />
                             </div>
-                                <div class="col-md-5">
-                                    <img ImageFile="1" src=""/>
-                                </div>
-
-                                </div>                           
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <img ImageFile="1" style="max-width: 300px" />
                             </div>
-                            <button type="submit" class="btn btn-raised btn-primary btn-round waves-effect">ذخیره</button>
-                        </form>
+                       </div>
+                        <button type="submit" class="btn btn-primary">افزودن</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <!-- #END# Vertical Layout -->
- 
-
-
+</div>
+<!-- #END# Vertical Layout -->
 @section Custom_js
- {
-    <partial name="_JqueryValidation"></partial>
- }
+{
+    <partial name="_JqueryValidation" />
+}

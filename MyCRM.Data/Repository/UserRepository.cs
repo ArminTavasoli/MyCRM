@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client.Extensibility;
 using MyCRM.Data.DbContexts;
 using MyCRM.Domain.Entities.Account;
 using MyCRM.Domain.Interfaces;
@@ -22,10 +23,8 @@ namespace MyCRM.Data.Repository
         }
 
 
-
-
-
         //User
+        #region User
         public async Task AddUser(User user)
         {
             await _context.Users.AddAsync(user);
@@ -35,12 +34,25 @@ namespace MyCRM.Data.Repository
         {
             return await _context.Users.FindAsync(userId);
         }
+
+        public async Task<User> GetUserDetailById(long userId)
+        {
+            return await _context.Users
+                .Include(u => u.Marketer)
+                .Include(u => u.Customer)
+                .FirstOrDefaultAsync(a => a.UserID==userId);
+        }
+
         public async Task UpdateUser(User user)
         {
             _context.Users.Update(user);
         }
+        #endregion
+
+
 
         //Marketer
+        #region Marketer
         public async Task AddMarketerAsync(Marketer marketer)
         {
             await _context.Marketers.AddAsync(marketer);
@@ -51,12 +63,12 @@ namespace MyCRM.Data.Repository
             _context.Marketers.Update(marketer);
         }
 
-        //Save
-        public async Task SaveChangesAsync()
-        {
-            await _context.SaveChangesAsync();
-        }
 
+        public async Task<Marketer> GetMarketerById(long marketerId)
+        {
+            return await _context.Marketers.FirstOrDefaultAsync(m => m.UserID == marketerId);
+        }
+       
 
         //Filter User
         public async Task<FilterUserViewModel> filterUser(FilterUserViewModel filterUser)
@@ -91,6 +103,32 @@ namespace MyCRM.Data.Repository
 
 
             return filterUser.SetEntity(allEntites).SetPaging(pager);
+        }
+        #endregion
+
+
+        //Customer
+        #region Customer
+        public async Task AddCustomer(Customer customer)
+        {
+            await _context.Customers.AddAsync(customer);
+        }
+
+        public async Task<Customer> GetCustomerWithId(long customerId)
+        {
+            return await _context.Customers.FirstOrDefaultAsync(c => c.UserID == customerId);
+        }
+
+        public async Task UpdateCustomer(Customer customer)
+        {
+             _context.Customers.Update(customer);
+        }
+        #endregion
+
+        //Save
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

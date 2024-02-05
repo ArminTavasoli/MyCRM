@@ -63,7 +63,6 @@ namespace MyCRM.Domain.ViewModel.User
 
         public Education MarketerEducation { get; set; }
 
-        public IFormFile? ImageFile { get; set; } 
     }
 
     public enum AddMarketerResult

@@ -15,10 +15,19 @@ namespace MyCRM.Domain.Interfaces
         Task AddUser(User user);
         Task UpdateUser(User user);
         Task<User> GetUserWithID(long userId);
+        Task<User> GetUserDetailById(long userId);
 
         //Marketer
         Task AddMarketerAsync(Marketer marketer);
         Task UpdateMarketerAsync(Marketer marketer);
+        Task<Marketer> GetMarketerById(long marketerId);
+
+
+        //Customer
+        Task AddCustomer(Customer customer);
+        Task<Customer> GetCustomerWithId(long customerId);
+        Task UpdateCustomer(Customer customer);
+
         //Filter
         Task<FilterUserViewModel> filterUser(FilterUserViewModel filterUser); 
 

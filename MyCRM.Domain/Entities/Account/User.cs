@@ -12,13 +12,13 @@ namespace MyCRM.Domain.Entities.Account
         [Key]
         public long UserID { get; set; }
 
-        [Display(Name ="نام کاربری")]
-        [MaxLength(30 , ErrorMessage = "لطفا تعداد کارکتر خود را کم کنید")]
+        [Display(Name = "نام کاربری")]
+        [MaxLength(30, ErrorMessage = "لطفا تعداد کارکتر خود را کم کنید")]
         public string UserName { get; set; } = string.Empty;
 
 
         [Display(Name = "رمز")]
-        [MaxLength(30, ErrorMessage = "لطفا تعداد کارکتر خود را کم کنید")]
+        [MaxLength(100, ErrorMessage = "لطفا تعداد کارکتر خود را کم کنید")]
         public string Password { get; set; } = string.Empty;
 
 
@@ -59,7 +59,7 @@ namespace MyCRM.Domain.Entities.Account
 
 
         #region Relation
-        public Marketer Marketer { get; set; }
+        public Marketer Marketer { get; set; } 
 
         public Customer Customer  { get; set; }
 

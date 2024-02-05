@@ -29,7 +29,7 @@ namespace MyCRM.Domain.Entities.Account
 
         #region Relation
         public User User { get; set; }
-        #endregion Relation
+        #endregion 
     }
 
 

@@ -5,6 +5,7 @@ function fillPageId(id) {
     $('#filter-search').submit();
 }
 
+//Show Message
 function ShowMessage(title,text,theme) {
     window.createNotification({
         closeOnClick: true,

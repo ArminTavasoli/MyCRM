@@ -4,118 +4,111 @@
     ViewData["Title"] = "کاربران";
 }
 
-<div class="row clearfix">
-    <div class="col-lg-12 col-md-12 col-sm-12">
+
+<div class="row">
+    <div class="col-md-12">
         <div class="card">
-            <div class="header">
-                <h2>فیلتر <strong>کاربر</strong></h2>
-                <ul class="header-dropdown">
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                        <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="javascript:void(0);">عملیات</a></li>
-                            <li><a href="javascript:void(0);">عملیات دیگر</a></li>
-                            <li><a href="javascript:void(0);">یک چیز دیگر</a></li>
-                        </ul>
-                    </li>
-                    <li class="remove">
-                        <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                    </li>
-                </ul>
+            <div class="card-header">
+                <h4 class="card-title">فیلتر</h4>
             </div>
-            <div class="body">
-                <form method="get" id="filter-search" enctype="multipart/form-data ">
-                    <input type="hidden" id="pageId" asp-for="PageId"/>
-                    <div class="row clearfix">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>نام</label>
-                                <input type="text" class="form-control" asp-for="FilterName">
+            <div class="card-body">
+                <div class="basic-form">
+                    <form asp-controller="User" asp-action="Index" method="get" id="filter-search">
+                        <input type="hidden" id="pageId" asp-for="PageId"/>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>نام </label>
+                                <input asp-for="FilterName" class="form-control">
                             </div>
+                            <div class="form-group col-md-6">
+                                <label>نام خانوادگی</label>
+                                <input asp-for="FilterLastName" class="form-control">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>موبایل</label>
+                                <input asp-for="FilterMobile" class="form-control">
+                            </div>
+                            @*<div class="form-group col-md-6">
+                                    <label>ایمیل</label>
+                                    <input type="text" asp-for="" class="form-control">
+                                </div>*@
                         </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>نام خانوادگی</label>
-                            <input type="text" class="form-control" asp-for="FilterLastName">
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary">فیلتر</button>
+                        @if (Context.Request.QueryString.HasValue)
+                        {
+                            <a class="btn btn-danger" asp-controller="User" asp-action="Index">حذف فیلتر</a>
+                        }
+                    </form>
                 </div>
-
-                    <div class="row clearfix">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>شماره تماس</label>
-                                <input type="text" class="form-control" asp-for="FilterMobile ">
-                            </div>
-                        </div>
-                    </div>
-
-                    @if (Context.Request.QueryString.HasValue)
-                    {
-                        <a asp-controller="User" asp-action="Index" class="btn btn-raised btn-primary btn-round waves-effect">حذف فیلتر</a>
-                    }
-                    <button type="submit" class="btn btn-raised btn-info btn-round waves-effect">فیلتر</button>
-                </form>
             </div>
         </div>
     </div>
 </div>
 
-    <!-- Striped Rows -->
-    <div class="row clearfix">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-                <div class="header">
-                    <ul class="header-dropdown">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="zmdi zmdi-more"></i> </a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="javascript:void(0);">افزودن سرنخ</a></li>
-                            <li><a asp-controller="UserController" asp-action="CreateMarketer">افزودن بازاریاب</a></li>
-                            <li><a asp-controller="User" asp-action="CreateCustomer">افزودن مشتری</a></li>
-                            </ul>
-                        </li>
-                        <li class="remove">
-                            <a role="button" class="boxs-close"><i class="zmdi zmdi-close"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="body table-responsive">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>نام</th>
-                                <th>نام  خانوادگی</th>
-                                <th>نام کاربری</th>
-                                <th>ایمیل</th>
-                                <th>Email</th>
-                                <th>عملیات</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @if(Model.Users != null)
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">لیست کاربران</h4>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <div id="example3_wrapper" class="table table-responsive-md tc">
+                
+               
+                <table id="example3" class="table table-responsive-md tc"  >
+                    <thead>
+                    <tr role="row">
+
+                        <th></th>
+                        <th>نام</th>
+                        <th>بخش</th>
+                        <th>ایمیل</th>
+                        <th>موبایل</th>
+                        <th>تاریخ عضو</th>
+                        <th>عملیات</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (Model.Users != null)
+                    {
+                        @foreach (var user in Model.Users)
                         {
-                            foreach (var users in Model.Users)
-                            {
-                                <tr>
-                                    <th>@users.FirstName</th>
-                                    <td>@users.LastName</td>
-                                    <td>@users.MobilePhone</td>
-                                    <td>@users.Email</td>
-                                    <td>
-                                        <a class="btn btn-primary btn-xs btn-sm"><i class="zmdi zmdi-edit "></i></a>
-                                    </td>
-                                </tr>
-                            }
+                            <tr role="row" class="odd">
+                                <td class=""><img class="rounded-circle" width="35" src="/SiteStatic/images/profile/small/pic1.jpg" alt=""></td>
+                                <td>@user.FirstName</td>
+                                <td>@user.LastName</td>
+                                <td>@user.Email</td>
+                                <td>@user.MobilePhone</td>
+                                <td>1390/3/4</td>
+                                <td>
+                                    <div class="d-flex">
+                                        @if (user.Marketer != null)
+                                        {
+                                            <a asp-controller="User" asp-action="EditMarketer" asp-route-id="@user.UserID" class="btn btn-primary shadow btn-xs sharp mr-1"><i class="fa fa-pencil"></i></a>
+                                        }
+                                        else
+                                        {
+
+                                        }
+
+                                        <a href="#" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
                         }
-                        </tbody>
-                    </table>
-                </div>
+                    }
+
+                    </tbody>
+                </table>
+
             </div>
-        <partial name="_PagingPartial" model="@Model.GetCurrentPaging()"></partial> 
+            
+            <partial name="_PagingPartial" model="@Model.GetCurrentPaging()" />
         </div>
     </div>
-    <!-- #END# Striped Rows --> 
+</div>
+
+
+
 
 

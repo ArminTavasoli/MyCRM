@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using MyCRM.Application.Extensions;
 
-namespace MyCRM.Application.Extensions
+namespace MyCrm.Application.Extensions
 {
     public static class UploadImageExtexsion
     {
-        public static void AddImageToServer(this IFormFile image, string fileName, string orginalPath, int? width, int? height, string thumbPath = null, string deletefileName = null)
+        public static void AddImageToServer(this IFormFile image, string fileName, string orginalPath, int? width, int? height, string? thumbPath = null, string? deletefileName = null)
         {
             if (image != null)
             {
@@ -40,12 +42,13 @@ namespace MyCRM.Application.Extensions
                     if (!Directory.Exists(thumbPath))
                         Directory.CreateDirectory(thumbPath);
 
-/*                    ImageOptimizer resizer = new ImageOptimizer();
+                    ImageOptimizer resizer = new ImageOptimizer();
 
                     if (width != null && height != null)
-                        resizer.ImageResizer(orginalPath + fileName, thumbPath + fileName, width, height);*/
+                        resizer.ImageResizer(orginalPath + fileName, thumbPath + fileName, width, height);
                 }
             }
         }
+
     }
 }

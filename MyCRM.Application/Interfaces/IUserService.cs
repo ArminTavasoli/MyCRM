@@ -13,5 +13,12 @@ namespace MyCRM.Application.Interfaces
         Task<AddMarketerResult> AddMarketer(AddMarketerViewModel  marketer, IFormFile imageProfile); 
 
         Task<FilterUserViewModel> Filter (FilterUserViewModel filter);
+
+        Task<EditeMarketerViewModle> GetMarketerforEdite(long UserId);
+
+        Task<EditeMarketerResult> EditeMarketer(EditeMarketerViewModle editeMarketer , IFormFile imageProfile);
+
+        Task<AddCustomerResult> AddCustomer(AddCustomerViewModel newCustomer , IFormFile imageProfile);
+
     }
 }

@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+//Dependensi Injection
 #region Dependensi Injection
 //User Repository
 builder.Services.AddTransient<IUserRepository, UserRepository>();
@@ -24,8 +25,8 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IUserService, UserServices>();
 #endregion
 
+//Encoder
 #region Encoder
-//???? ????? ???? ???? ?????????
 builder.Services.AddSingleton<HtmlEncoder>(
     HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 #endregion

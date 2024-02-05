@@ -13,11 +13,11 @@ namespace MyCRM.IoC
 {
     public class DependencyContainers
     {
-        public static void RegisterServices(IServiceCollection services)
+/*        public static void RegisterServices(IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddTransient<IUserService , UserServices>();
-        }
+        }*/
     }
 }

@@ -10,9 +10,9 @@ namespace MyCRM.Domain.ViewModel.Paging
     {
         public BasePaging()
         {
-            TakeEntity = 1;
+            TakeEntity = 5;
             PageId = 1;
-            HowManyShowPageAfterAndBefore = 3;
+            HowManyShowPageAfterAndBefore = 1;
         }
 
         public int PageId { get; set; }
