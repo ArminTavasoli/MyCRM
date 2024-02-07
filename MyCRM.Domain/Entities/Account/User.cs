@@ -53,13 +53,13 @@ namespace MyCRM.Domain.Entities.Account
 
         public Gender UserGender { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
         public bool IsDeleted { get; set; }
 
 
         #region Relation
-        public Marketer Marketer { get; set; } 
+        public Marketer Marketer { get; set; }
 
         public Customer Customer  { get; set; }
 

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using MyCRM.Application.Interfaces;
 using MyCRM.Application.Services;
 using MyCRM.Data.DbContexts;
@@ -16,10 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-//Dependensi Injection
-#region Dependensi Injection
-//User Repository
-builder.Services.AddTransient<IUserRepository, UserRepository>();
+    //Dependensi Injection
+    #region Dependensi Injection
+    //User Repository
+    builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 //User Service
 builder.Services.AddTransient<IUserService, UserServices>();

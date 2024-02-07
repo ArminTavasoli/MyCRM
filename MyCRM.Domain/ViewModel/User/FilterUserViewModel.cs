@@ -13,7 +13,7 @@ namespace MyCRM.Domain.ViewModel.User
         public string FilterLastName { get; set; } = string.Empty;
         public string FilterMobile { get; set; } = string.Empty;
 
-        public List<Entities.Account.User> Users { get; set; }
+        public List<Entities.Account.User> Users { get; set; } = new List<Entities.Account.User>();
 
 
         public FilterUserViewModel SetEntity(List<Entities.Account.User> users)

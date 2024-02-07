@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client.Extensibility;
 using MyCRM.Data.DbContexts;
 using MyCRM.Domain.Entities.Account;
 using MyCRM.Domain.Interfaces;
 using MyCRM.Domain.ViewModel.Paging;
 using MyCRM.Domain.ViewModel.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyCRM.Data.Repository
 {
@@ -40,7 +34,7 @@ namespace MyCRM.Data.Repository
             return await _context.Users
                 .Include(u => u.Marketer)
                 .Include(u => u.Customer)
-                .FirstOrDefaultAsync(a => a.UserID==userId);
+                .FirstOrDefaultAsync(a => a.UserID == userId);
         }
 
         public async Task UpdateUser(User user)
@@ -68,12 +62,17 @@ namespace MyCRM.Data.Repository
         {
             return await _context.Marketers.FirstOrDefaultAsync(m => m.UserID == marketerId);
         }
-       
+
 
         //Filter User
         public async Task<FilterUserViewModel> filterUser(FilterUserViewModel filterUser)
         {
-            var query = _context.Users.AsQueryable();
+            var query = _context.Users
+                        .OrderByDescending(a => a.CreatedDate)
+                        .Include(a => a.Marketer)
+                        .Include(a => a.Customer)
+                        .Where(a => !a.IsDeleted)
+                        .AsQueryable();
 
             #region Filtering
             //Filter FirstName
@@ -121,7 +120,7 @@ namespace MyCRM.Data.Repository
 
         public async Task UpdateCustomer(Customer customer)
         {
-             _context.Customers.Update(customer);
+            _context.Customers.Update(customer);
         }
         #endregion
 

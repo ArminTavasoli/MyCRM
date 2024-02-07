@@ -10,15 +10,19 @@ namespace MyCRM.Application.Interfaces
 {
     public interface IUserService
     {
-        Task<AddMarketerResult> AddMarketer(AddMarketerViewModel  marketer, IFormFile imageProfile); 
-
-        Task<FilterUserViewModel> Filter (FilterUserViewModel filter);
-
+        //Marketer
+        Task<AddMarketerResult> AddMarketer(AddMarketerViewModel  marketer, IFormFile imageProfile);
         Task<EditeMarketerViewModle> GetMarketerforEdite(long UserId);
+        Task<EditeMarketerResult> EditeMarketer(EditeMarketerViewModle editeMarketer, IFormFile imageProfile);
 
-        Task<EditeMarketerResult> EditeMarketer(EditeMarketerViewModle editeMarketer , IFormFile imageProfile);
-
+        //Filter
+        Task<FilterUserViewModel> Filter (FilterUserViewModel filter);
+        
+        
+        //Cusetomer
         Task<AddCustomerResult> AddCustomer(AddCustomerViewModel newCustomer , IFormFile imageProfile);
+        Task<EditeCustomerViewModel> FillEditeCustomerViewModel(long UserId);
+        Task<EditeCustomerResult> EditeCustomer(EditeCustomerViewModel editeCustomer , IFormFile imageProfile);
 
     }
 }
