@@ -209,5 +209,80 @@ namespace MyCRM.Application.Services
             return AddCustomerResult.Success;
 
         }
+
+        //Get Customer for Edite
+        public async Task<EditeCustomerViewModel> FillEditeCustomerViewModel(long UserId)
+        {
+            var customer = await _userRepositort.GetCustomerWithId(UserId);
+            if(customer == null)
+            {
+                return null;
+            }
+
+            var user = await _userRepositort.GetUserWithID(UserId);
+
+            var result = new EditeCustomerViewModel
+            {
+                UserId = user.UserID,
+                Job = customer.Job,
+                CompanyName = customer.CompanyName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                IntroduceName = user.IntroduceName,
+                Email = user.Email,
+                MobilePhone = user.MobilePhone ,
+                ImageName = user.ImageName ,
+                UserName = user.UserName               
+            };
+            return result;
+        }
+
+        //Edite Customer
+        public async Task<EditeCustomerResult> EditeCustomer(EditeCustomerViewModel editeCustomer, IFormFile imageProfile)
+        {
+            var customer = await _userRepositort.GetCustomerWithId(editeCustomer.UserId);
+            if(customer == null)
+            {
+                return EditeCustomerResult.Fail;
+            }
+
+            var user = await _userRepositort.GetUserWithID(editeCustomer.UserId);
+            if(user == null)
+            {
+                return EditeCustomerResult.Fail;
+            }
+
+            var imageProfileName = "";
+            if(imageProfile?.Length > 0)
+            {
+                imageProfileName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(imageProfile.FileName);
+                imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
+            }
+
+            customer.Job = editeCustomer.Job;
+            customer.CompanyName = editeCustomer.CompanyName;
+
+            user.UserID = editeCustomer.UserId;
+            user.UserName = editeCustomer.UserName;
+            user.FirstName = editeCustomer.FirstName;
+            user.LastName = editeCustomer.LastName;
+            user.IntroduceName = editeCustomer.IntroduceName;
+            user.MobilePhone = editeCustomer.MobilePhone;
+            user.Email = editeCustomer.Email;
+
+            if (!string.IsNullOrEmpty(imageProfileName))
+            {
+                user.ImageName = imageProfileName;
+            }
+            //To do add gender
+
+            await _userRepositort.UpdateCustomer(customer);
+            await _userRepositort.UpdateUser(user);
+
+            await _userRepositort.SaveChangesAsync();
+
+            return EditeCustomerResult.Success;
+
+        }
     }
 }

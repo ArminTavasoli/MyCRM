@@ -20,5 +20,16 @@ namespace MyCRM.Data.DbContexts
         public DbSet<Customer> Customers { get; set; }
 
         public DbSet<Marketer> Marketers { get; set; }
+
+        public async void FixData()
+        {
+            var userToChange =await Users.FirstOrDefaultAsync(u => u.CreatedDate == DateTime.MinValue);
+            if (userToChange != null)
+            {
+                userToChange.CreatedDate = DateTime.Now;
+            }
+
+           await SaveChangesAsync();
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace MyCRM.Controllers
         #endregion
 
         #region Create User
+        #region Create Customer
         //Create Customer
         [HttpGet]
         public async Task<IActionResult> CreateCustomer()
@@ -35,25 +36,25 @@ namespace MyCRM.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer(AddCustomerViewModel customerViewModel , IFormFile? imageProfile )
+        public async Task<IActionResult> CreateCustomer(AddCustomerViewModel customerViewModel, IFormFile? imageProfile)
         {
             if (!ModelState.IsValid)
             {
                 TempData[ErrorMessage] = "خطایی رخ داده است ...";
-                foreach(var error in ModelState.Values.SelectMany(e => e.Errors))
+                foreach (var error in ModelState.Values.SelectMany(e => e.Errors))
                 {
                     Console.WriteLine(error.ErrorMessage);
                 }
                 return View(customerViewModel);
             }
 
-            var customer = await _userServices.AddCustomer(customerViewModel, imageProfile); 
+            var customer = await _userServices.AddCustomer(customerViewModel, imageProfile);
 
-            switch(customer)
+            switch (customer)
             {
                 case AddCustomerResult.Success:
                     TempData[SuccessMessage] = "موفقیت...";
-                    return RedirectToAction("Index"); 
+                    return RedirectToAction("Index");
                 case AddCustomerResult.Fail:
                     TempData[ErrorMessage] = "خطا ";
                     break;
@@ -61,8 +62,9 @@ namespace MyCRM.Controllers
 
             return View(customerViewModel);
         }
+        #endregion
 
-
+        #region Create Marketer
         //Create Marketer
         public async Task<IActionResult> CreateMarketer()
         {
@@ -84,7 +86,8 @@ namespace MyCRM.Controllers
             {
                 case AddMarketerResult.Success:
                     TempData[SuccessMessage] = "موفقیت";
-                    return RedirectToAction("Index");
+                    //return RedirectToAction("Index");
+                    break;
                 case AddMarketerResult.Fail:
                     TempData[WarningMessage] = "خطا";
                     ModelState.AddModelError("UserName", "مشکلی در ثبت اطلاعات می باشد...");
@@ -93,10 +96,11 @@ namespace MyCRM.Controllers
 
             return View(addMarketer);
         }
+        #endregion
 
         #endregion Create User
 
-
+        #region Edite User
         #region EditeMarketer
         [HttpGet]
         public async Task<IActionResult> EditeMarketer(long Id)
@@ -131,9 +135,42 @@ namespace MyCRM.Controllers
                     break;
             }
 
-            return View(editeMarketer);
+            return View(editeMarketer); 
 
         }
         #endregion
+
+        #region Edite Customer
+        [HttpGet]
+        public async Task<IActionResult> EditeCustomer(long id)
+        {
+            var customer = await _userServices.FillEditeCustomerViewModel(id);
+            return View(customer);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditeCustomer(EditeCustomerViewModel editeMarketer , IFormFile imageProfile)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData[ErrorMessage] = "لطفا اطلاعات را اصلاح کنید...";
+                return View(editeMarketer);
+            }
+
+            var result = await _userServices.EditeCustomer(editeMarketer, imageProfile);
+            switch (result)
+            {
+                case EditeCustomerResult.Success:
+                    TempData[SuccessMessage] = "عملیات موفقیت آمیز بود";
+                    return RedirectToAction("Index");
+                case EditeCustomerResult.Fail:
+                    TempData[ErrorMessage] = "خطا";
+                    break;
+            }
+            return View(editeMarketer);
+        }
+        #endregion
+        #endregion
+
     }
 }
