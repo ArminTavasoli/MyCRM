@@ -31,6 +31,7 @@ namespace MyCRM.Domain.Interfaces
         //Filter
         Task<FilterUserViewModel> filterUser(FilterUserViewModel filterUser); 
 
+
         Task SaveChangesAsync();
     }
 }
