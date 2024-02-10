@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyCRM.Domain.Entities.Orders;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,6 +25,7 @@ namespace MyCRM.Domain.Entities.Account
 
         #region Relation
         public User User { get; set; }
+        public ICollection<Order> OrderCollection { get; set; }
         #endregion Relation
     }
 }
