@@ -40,6 +40,7 @@ namespace MyCRM.Domain.ViewModel.User
 
 
         [Display(Name = "شماره تلفن")]
+        [Required(ErrorMessage = "لطفا شماره تلفن را وارد کنید...")]
         [MaxLength(11, ErrorMessage = "لطفا تعداد کارکتر خود را کم کنید")]
         public string MobilePhone { get; set; } = string.Empty;
 

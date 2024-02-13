@@ -35,6 +35,7 @@ namespace MyCRM.Domain.ViewModel.User
         public string ImageName { get; set; } = string.Empty;
 
         [Display(Name = "شماره موبایل")]
+        [Required(ErrorMessage = "لطفا شماره تلفن را وارد کنید...")]
         [MaxLength(100, ErrorMessage = "{0} نمی تواند بیشتر از بلاک {1} باشد")]
         public string MobilePhone { get; set; } = string.Empty;
 
