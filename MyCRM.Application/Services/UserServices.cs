@@ -284,5 +284,11 @@ namespace MyCRM.Application.Services
             return EditeCustomerResult.Success;
 
         }
+
+        //Get Customer with Id
+        public async Task<Customer> GetCustomerById(long CustomerId)
+        {
+           return await _userRepositort.GetCustomerWithId(CustomerId);
+        }
     }
 }

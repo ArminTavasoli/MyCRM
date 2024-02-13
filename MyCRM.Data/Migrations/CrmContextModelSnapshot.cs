@@ -39,7 +39,7 @@ namespace MyCRM.Data.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("MyCRM.Domain.Entities.Account.Marketer", b =>
@@ -65,7 +65,7 @@ namespace MyCRM.Data.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Marketers");
+                    b.ToTable("Marketers", (string)null);
                 });
 
             modelBuilder.Entity("MyCRM.Domain.Entities.Account.User", b =>
@@ -127,7 +127,7 @@ namespace MyCRM.Data.Migrations
 
                     b.HasKey("UserID");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("MyCRM.Domain.Entities.Orders.Order", b =>
@@ -175,7 +175,7 @@ namespace MyCRM.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("MyCRM.Domain.Entities.Orders.OrderSelectedMarketer", b =>
@@ -206,7 +206,7 @@ namespace MyCRM.Data.Migrations
 
                     b.HasIndex("ModifyUserId");
 
-                    b.ToTable("OrderSelectedMarketers");
+                    b.ToTable("OrderSelectedMarketers", (string)null);
                 });
 
             modelBuilder.Entity("MyCRM.Domain.Entities.Account.Customer", b =>
