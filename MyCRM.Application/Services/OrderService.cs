@@ -46,7 +46,7 @@ namespace MyCRM.Application.Services
 
             if(!string.IsNullOrEmpty(imageProfileName) )
             {
-                imageProfileName = order.ImageName;
+                order.ImageName = imageProfileName;
             }
 
             await _orderRepository.AddOrder(order);

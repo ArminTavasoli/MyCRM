@@ -115,7 +115,7 @@ namespace MyCRM.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditeMarketer(EditeMarketerViewModle editeMarketer, IFormFile imageProfile)
+        public async Task<IActionResult> EditeMarketer(EditeMarketerViewModle editeMarketer, IFormFile orderImage)
         {
             if (!ModelState.IsValid)
             {
@@ -123,7 +123,7 @@ namespace MyCRM.Controllers
                 return View(editeMarketer);
             }
 
-            var result = await _userServices.EditeMarketer(editeMarketer, imageProfile);
+            var result = await _userServices.EditeMarketer(editeMarketer, orderImage);
 
             switch (result)
             {

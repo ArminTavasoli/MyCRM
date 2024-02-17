@@ -9,7 +9,7 @@ namespace MyCRM.Application.Extensions
 {
     public static class UserExtension
     {
-        public static string GetUserShowName(this User user)
+        public static string GetUserShowName(this User? user)
         {
             if (!string.IsNullOrEmpty(user.FirstName) && !string.IsNullOrEmpty(user.LastName))
             {

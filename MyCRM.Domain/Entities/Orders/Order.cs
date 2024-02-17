@@ -26,7 +26,7 @@ namespace MyCRM.Domain.Entities.Orders
         public string Description { get; set; } = string.Empty;
 
         [MaxLength(150, ErrorMessage = "{0} نمی تواند بیشتر از بلاک {1} باشد")]
-        public string ImageName { get; set; } 
+        public string ImageName { get; set; } = string.Empty; 
 
         public bool IsDelete { get; set; } = false;
 
