@@ -115,7 +115,9 @@ namespace MyCRM.Data.Repository
 
         public async Task<Customer> GetCustomerWithId(long customerId)
         {
-            return await _context.Customers.FirstOrDefaultAsync(c => c.UserID == customerId);
+            return await _context.Customers
+                .Include(c => c.User)
+                .FirstAsync(c => c.UserID == customerId);
         }
 
         public async Task UpdateCustomer(Customer customer)

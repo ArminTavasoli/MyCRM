@@ -9,6 +9,7 @@ namespace MyCRM.Application.StaticTools
 {
     public class FilePath
     {
+        #region Users
         //تصویر پیش فرض
         public static readonly string UserProfileDefault = "/images/user/default/avatar.png";
 
@@ -17,5 +18,11 @@ namespace MyCRM.Application.StaticTools
 
         //برای بارگذاری روی سرور
         public static readonly string UploadImageProfileServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/user/profile/");
+        #endregion
+
+        #region Orders
+        public static readonly string OrderImagePath = "/images/order/image/";
+        public static readonly string OrderImagePathServer = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/order/image/");
+        #endregion
     }
 }

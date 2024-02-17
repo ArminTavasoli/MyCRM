@@ -24,7 +24,7 @@ namespace MyCRM.Domain.Entities.Account
         public string CompanyName { get; set; } = string.Empty;
 
         #region Relation
-        public User User { get; set; }
+        public User User { get; set; } 
         public ICollection<Order> OrderCollection { get; set; }
         #endregion Relation
     }
