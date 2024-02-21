@@ -95,7 +95,7 @@ namespace MyCRM.Data.Repository
             #endregion
 
             #region Paging
-            var pager = Pager.BuildPager(filterUser.PageId, filterUser.HowManyShowPageAfterAndBefore, filterUser.AllEntitiesCount,
+            var pager = Pager.BuildPager(filterUser.PageId, filterUser.HowManyShowPageAfterAndBefore, await query.CountAsync(),
                                                     filterUser.TakeEntity);
             var allEntites = await query.Paging(pager).ToListAsync();
             #endregion
