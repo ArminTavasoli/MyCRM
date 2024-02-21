@@ -11,6 +11,8 @@ namespace MyCRM.Domain.Interfaces
     {
         Task<Order> GetOrderById(long orderIds);
 
+        Task<IQueryable<Order>> GetOrders();
+
         Task AddOrder(Order order);
 
         Task UpdateOrder(Order order);  
