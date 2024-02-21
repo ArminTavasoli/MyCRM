@@ -18,9 +18,10 @@ namespace MyCRM.Controllers
         #endregion
 
         #region Filter Order
-        public async Task<IActionResult> FilterOrders()
+        public async Task<IActionResult> FilterOrders(FilterOrderViewModel filter)
         {
-            return NotFound();
+            var result = await _orderService.FilterOrder(filter);
+            return View(result);
         }
         #endregion
 
