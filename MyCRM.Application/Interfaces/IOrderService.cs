@@ -11,5 +11,6 @@ namespace MyCRM.Application.Interfaces
     public interface IOrderService
     {
         Task<CreateOrderResult> CreateOrder(CreateOrderViewModel createOrderViewModel , IFormFile imageProfile);
+        Task<FilterOrderViewModel> FilterOrder(FilterOrderViewModel filterOrder);
     }
 }

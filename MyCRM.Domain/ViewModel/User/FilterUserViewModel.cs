@@ -9,9 +9,9 @@ namespace MyCRM.Domain.ViewModel.User
 {
     public class FilterUserViewModel : BasePaging
     {
-        public string FilterName { get; set; } = string.Empty;
-        public string FilterLastName { get; set; } = string.Empty;
-        public string FilterMobile { get; set; } = string.Empty;
+        public string? FilterName { get; set; } 
+        public string? FilterLastName { get; set; } 
+        public string? FilterMobile { get; set; } 
 
         public List<Entities.Account.User> Users { get; set; } = new List<Entities.Account.User>();
 

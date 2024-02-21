@@ -39,6 +39,14 @@ namespace MyCRM.Data.Repository
              _context.Orders.Update(order);
         }
 
+
+        public async Task<IQueryable<Order>> GetOrders()
+        {
+            return _context.Orders
+                .Include(o => o.Customer)
+                .ThenInclude(o => o.User).AsQueryable();
+        }
+
         //Save
         public async Task SaveChange()
         {
