@@ -29,7 +29,7 @@ namespace MyCRM.Controllers
         //Create Order
         public async Task<IActionResult> CreateOrder(long id)
         {
-                ViewBag.customer = await _userService.GetCustomerById(id);
+            ViewBag.customer = await _userService.GetCustomerById(id);
 
             if (ViewBag.customer == null)
             {
@@ -41,7 +41,7 @@ namespace MyCRM.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder(CreateOrderViewModel orderViewModel , IFormFile orderImage)
+        public async Task<IActionResult> CreateOrder(CreateOrderViewModel orderViewModel, IFormFile orderImage)
         {
             ViewBag.customer = await _userService.GetCustomerById(orderViewModel.CustomerId);
 
@@ -51,7 +51,7 @@ namespace MyCRM.Controllers
                 return View(orderViewModel);
             }
 
-            var result = await _orderService.CreateOrder(orderViewModel , orderImage);
+            var result = await _orderService.CreateOrder(orderViewModel, orderImage);
 
             switch (result)
             {
@@ -64,7 +64,44 @@ namespace MyCRM.Controllers
             }
 
             return View(orderViewModel);
-            
+
+        }
+        #endregion
+
+
+        #region Edite Order
+        //Fill Order for Edite
+        public async Task<IActionResult> EditeOrder(long orderId)
+        {
+            var result = await _orderService.FillEditeOrderModel(orderId);
+            ViewBag.customer = await _userService.FillEditeCustomerViewModel(result.CustomerId);
+            return View(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditeOrder(EditeOrderViewModel editeOrder, IFormFile orderImage)
+        {
+            ViewBag.customer = await _userService.GetCustomerById(editeOrder.CustomerId);
+
+            if (!ModelState.IsValid)
+            {
+                TempData[WarningMessage] = "اطلاعات وارد شده معتبر نمی باشد...";
+                return View(editeOrder);
+            }
+
+            var result = await _orderService.EditeOrder(editeOrder, orderImage);
+
+            switch (result)
+            {
+                case EditeOrderResult.Success:
+                    TempData[SuccessMessage] = "سفارش با موفقیت ویرایش شد...";
+                    return RedirectToAction("FilterOrders");
+                case EditeOrderResult.Fail:
+                    TempData[ErrorMessage] = "ویرایش سفارش با خطا مواجه شده است ...";
+                    break;
+            }
+
+            return View(editeOrder);    
         }
         #endregion
     }
