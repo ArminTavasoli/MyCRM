@@ -12,5 +12,8 @@ namespace MyCRM.Application.Interfaces
     {
         Task<CreateOrderResult> CreateOrder(CreateOrderViewModel createOrderViewModel , IFormFile imageProfile);
         Task<FilterOrderViewModel> FilterOrder(FilterOrderViewModel filterOrder);
+
+        Task<EditeOrderViewModel> FillEditeOrderModel(long orderId);
+        Task<EditeOrderResult> EditeOrder(EditeOrderViewModel editeOrder, IFormFile orderImage);
     }
 }

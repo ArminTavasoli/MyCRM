@@ -7,7 +7,6 @@ using MyCRM.Application.Services;
 using MyCRM.Data.DbContexts;
 using MyCRM.Data.Repository;
 using MyCRM.Domain.Interfaces;
-using MyCRM.IoC;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;

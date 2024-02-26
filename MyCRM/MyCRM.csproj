@@ -19,7 +19,6 @@
     <ProjectReference Include="..\MyCRM.Application\MyCRM.Application.csproj" />
     <ProjectReference Include="..\MyCRM.Data\MyCRM.Data.csproj" />
     <ProjectReference Include="..\MyCRM.Domain\MyCRM.Domain.csproj" />
-    <ProjectReference Include="..\MyCRM.IoC\MyCRM.IoC.csproj" />
   </ItemGroup>
 
 </Project>
