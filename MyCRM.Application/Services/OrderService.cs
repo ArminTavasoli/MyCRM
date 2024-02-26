@@ -64,7 +64,7 @@ namespace MyCRM.Application.Services
         {
             var imageProfileName = "";
 
-            if(imageProfile?.Length > 0)
+            if (imageProfile?.Length > 0)
             {
                 imageProfileName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(imageProfile.FileName);
                 imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
@@ -78,7 +78,7 @@ namespace MyCRM.Application.Services
                 OrderType = createOrderViewModel.OrderType
             };
 
-            if(!string.IsNullOrEmpty(imageProfileName) )
+            if (!string.IsNullOrEmpty(imageProfileName))
             {
                 order.ImageName = imageProfileName;
             }
@@ -96,7 +96,7 @@ namespace MyCRM.Application.Services
         {
             var order = await _orderRepository.GetOrderById(orderId);
 
-            if(order == null)
+            if (order == null)
             {
                 return null;
             }
@@ -118,24 +118,24 @@ namespace MyCRM.Application.Services
         {
             var order = await _orderRepository.GetOrderById(editeOrder.OrderId);
 
-            if(order == null)
+            if (order == null)
             {
-               return EditeOrderResult.Fail; 
+                return EditeOrderResult.Fail;
             }
 
             var orderImageName = "";
 
-            if(orderImage?.Length> 0)
+            if (orderImage?.Length > 0)
             {
                 orderImageName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(orderImage.FileName);
-                orderImage.AddImageToServer(orderImageName , FilePath.OrderImagePathServer , 280 , 280); 
+                orderImage.AddImageToServer(orderImageName, FilePath.OrderImagePathServer, 280, 280);
             }
 
             order.Title = editeOrder.Title;
             order.Description = editeOrder.Description;
             order.OrderType = editeOrder.OrderType;
 
-            if(string.IsNullOrEmpty(orderImageName))
+            if (string.IsNullOrEmpty(orderImageName))
             {
                 order.ImageName = orderImageName;
             }
@@ -143,10 +143,29 @@ namespace MyCRM.Application.Services
             await _orderRepository.UpdateOrder(order);
             await _orderRepository.SaveChange();
 
-            return EditeOrderResult.Success;    
+            return EditeOrderResult.Success;
         }
         #endregion
 
-        
+
+        #region Delete Order
+        public async Task<bool> DeleteOrder(long orderId)
+        {
+            var order = await _orderRepository.GetOrderById(orderId);
+            if (order == null)
+            {
+                return false;
+            }
+
+            order.IsDelete = true;
+
+            await _orderRepository.UpdateOrder(order);
+            await _orderRepository.SaveChange();
+
+            return true;
+        }
+        #endregion
+
+
     }
 }

@@ -15,5 +15,6 @@ namespace MyCRM.Application.Interfaces
 
         Task<EditeOrderViewModel> FillEditeOrderModel(long orderId);
         Task<EditeOrderResult> EditeOrder(EditeOrderViewModel editeOrder, IFormFile orderImage);
+        Task<bool> DeleteOrder(long orderId);
     }
 }
