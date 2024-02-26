@@ -68,7 +68,6 @@ namespace MyCRM.Controllers
         }
         #endregion
 
-
         #region Edite Order
         //Fill Order for Edite
         public async Task<IActionResult> EditeOrder(long orderId)
@@ -102,6 +101,22 @@ namespace MyCRM.Controllers
             }
 
             return View(editeOrder);    
+        }
+        #endregion
+
+
+        #region Delete Order
+        public async Task<IActionResult> DeleteOrder(long orderId)
+        {
+            var result = await _orderService.DeleteOrder(orderId);
+            if(result)
+            {
+                TempData[SuccessMessage] = "سفارش مورد نظر با موفقیت پاک شد...";
+                return RedirectToAction("FilterOrders");
+            }
+
+            TempData[ErrorMessage] = "حذف سفارش با خطا رو به رو شد ...";
+            return RedirectToAction("FilterOrders");
         }
         #endregion
     }
