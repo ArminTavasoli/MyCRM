@@ -28,6 +28,37 @@ namespace MyCRM.Application.Services
         }
         #endregion
 
+
+        #region Filter and Paging Order
+        public async Task<FilterOrderViewModel> FilterOrder(FilterOrderViewModel filterOrder)
+        {
+            var query = await _orderRepository.GetOrders();
+
+            #region Filter
+            if (!string.IsNullOrEmpty(filterOrder.FilterCustomerName))
+            {
+                query = query.Where(a =>
+                EF.Functions.Like(a.Customer.User.FirstName, $"%{filterOrder.FilterCustomerName}%") ||
+                EF.Functions.Like(a.Customer.User.LastName, $"%{filterOrder.FilterCustomerName}%") ||
+                EF.Functions.Like(a.Customer.User.MobilePhone, $"%{filterOrder.FilterCustomerName}%"));
+            }
+
+            if (!string.IsNullOrEmpty(filterOrder.FilterOrderName))
+            {
+                query = query.Where(a => EF.Functions.Like(a.Title, $"%{filterOrder.FilterOrderName}%"));
+            }
+            #endregion
+
+            #region Paging
+            var pager = Pager.BuildPager(filterOrder.PageId, filterOrder.HowManyShowPageAfterAndBefore, await query.CountAsync(), filterOrder.TakeEntity);
+
+            var allEntities = await query.Paging(pager).ToListAsync();
+            #endregion
+            return filterOrder.SetEntity(allEntities).SetPaging(pager);
+        }
+        #endregion
+
+        #region Create Order
         //Add Order
         public async Task<CreateOrderResult> CreateOrder(CreateOrderViewModel createOrderViewModel, IFormFile imageProfile)
         {
@@ -57,32 +88,65 @@ namespace MyCRM.Application.Services
 
             return CreateOrderResult.Success;
         }
+        #endregion
 
-        public async Task<FilterOrderViewModel> FilterOrder(FilterOrderViewModel filterOrder)
+        #region Edite Order
+        //Fill Order for Edite
+        public async Task<EditeOrderViewModel> FillEditeOrderModel(long orderId)
         {
-            var query = await _orderRepository.GetOrders();
+            var order = await _orderRepository.GetOrderById(orderId);
 
-            #region Filter
-            if(!string.IsNullOrEmpty(filterOrder.FilterCustomerName) )
+            if(order == null)
             {
-                query = query.Where(a =>
-                EF.Functions.Like(a.Customer.User.FirstName, $"%{filterOrder.FilterCustomerName}%") ||
-                EF.Functions.Like(a.Customer.User.LastName, $"%{filterOrder.FilterCustomerName}%") ||
-                EF.Functions.Like(a.Customer.User.MobilePhone, $"%{filterOrder.FilterCustomerName}%"));
+                return null;
             }
 
-            if(!string.IsNullOrEmpty(filterOrder.FilterOrderName) )
+            var result = new EditeOrderViewModel()
             {
-                query = query.Where(a => EF.Functions.Like(a.Title, $"%{filterOrder.FilterOrderName}%"));
-            }
-            #endregion
+                OrderId = orderId,
+                CustomerId = order.CustomerId,
+                Title = order.Title,
+                Description = order.Description,
+                ImageName = order.ImageName
+            };
 
-            #region Paging
-            var pager = Pager.BuildPager(filterOrder.PageId, filterOrder.HowManyShowPageAfterAndBefore, await query.CountAsync(), filterOrder.TakeEntity);
-
-            var allEntities = await query.Paging(pager).ToListAsync();
-            #endregion
-            return filterOrder.SetEntity(allEntities).SetPaging(pager); 
+            return result;
         }
+
+        //Edite Order Final
+        public async Task<EditeOrderResult> EditeOrder(EditeOrderViewModel editeOrder, IFormFile orderImage)
+        {
+            var order = await _orderRepository.GetOrderById(editeOrder.OrderId);
+
+            if(order == null)
+            {
+               return EditeOrderResult.Fail; 
+            }
+
+            var orderImageName = "";
+
+            if(orderImage?.Length> 0)
+            {
+                orderImageName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(orderImage.FileName);
+                orderImage.AddImageToServer(orderImageName , FilePath.OrderImagePathServer , 280 , 280); 
+            }
+
+            order.Title = editeOrder.Title;
+            order.Description = editeOrder.Description;
+            order.OrderType = editeOrder.OrderType;
+
+            if(string.IsNullOrEmpty(orderImageName))
+            {
+                order.ImageName = orderImageName;
+            }
+
+            await _orderRepository.UpdateOrder(order);
+            await _orderRepository.SaveChange();
+
+            return EditeOrderResult.Success;    
+        }
+        #endregion
+
+        
     }
 }

@@ -9,12 +9,58 @@ namespace MyCRM.Data.Repository
 {
     public class UserRepository : IUserRepository
     {
+        //Constructor
+        #region Constructor
         private readonly CrmContext _context;
 
         public UserRepository(CrmContext context)
         {
             this._context = context;
         }
+        #endregion
+
+        //User Filter and Paging
+        #region Filtering
+        //Filter User
+        public async Task<FilterUserViewModel> filterUser(FilterUserViewModel filterUser)
+        {
+            var query = _context.Users
+                        .OrderByDescending(a => a.CreatedDate)
+                        .Include(a => a.Marketer)
+                        .Include(a => a.Customer)
+                        .Where(a => !a.IsDeleted)
+                        .AsQueryable();
+
+            
+            //Filter FirstName
+            if (!string.IsNullOrEmpty(filterUser.FilterName))
+            {
+                query = query.Where(a => EF.Functions.Like(a.FirstName, $"%{filterUser.FilterName}%"));
+            }
+
+            //Filter LastName
+            if (!string.IsNullOrEmpty(filterUser.FilterLastName))
+            {
+                query = query.Where(l => EF.Functions.Like(l.LastName, $"%{filterUser.FilterLastName}%"));
+            }
+
+            //Filter MobilePhone
+            if (!string.IsNullOrEmpty(filterUser.FilterMobile))
+            {
+                query = query.Where(m => EF.Functions.Like(m.MobilePhone, $"%{filterUser.FilterMobile}%"));
+            }
+            
+
+            #region Paging
+            var pager = Pager.BuildPager(filterUser.PageId, filterUser.HowManyShowPageAfterAndBefore, await query.CountAsync(),
+                                                    filterUser.TakeEntity);
+            var allEntites = await query.Paging(pager).ToListAsync();
+            #endregion
+
+
+            return filterUser.SetEntity(allEntites).SetPaging(pager);
+        }
+        #endregion
 
 
         //User
@@ -44,7 +90,6 @@ namespace MyCRM.Data.Repository
         #endregion
 
 
-
         //Marketer
         #region Marketer
         public async Task AddMarketerAsync(Marketer marketer)
@@ -64,45 +109,7 @@ namespace MyCRM.Data.Repository
         }
 
 
-        //Filter User
-        public async Task<FilterUserViewModel> filterUser(FilterUserViewModel filterUser)
-        {
-            var query = _context.Users
-                        .OrderByDescending(a => a.CreatedDate)
-                        .Include(a => a.Marketer)
-                        .Include(a => a.Customer)
-                        .Where(a => !a.IsDeleted)
-                        .AsQueryable();
 
-            #region Filtering
-            //Filter FirstName
-            if (!string.IsNullOrEmpty(filterUser.FilterName))
-            {
-                query = query.Where(a => EF.Functions.Like(a.FirstName, $"%{filterUser.FilterName}%"));
-            }
-
-            //Filter LastName
-            if (!string.IsNullOrEmpty(filterUser.FilterLastName))
-            {
-                query = query.Where(l => EF.Functions.Like(l.LastName, $"%{filterUser.FilterLastName}%"));
-            }
-
-            //Filter MobilePhone
-            if (!string.IsNullOrEmpty(filterUser.FilterMobile))
-            {
-                query = query.Where(m => EF.Functions.Like(m.MobilePhone, $"%{filterUser.FilterMobile}%"));
-            }
-            #endregion
-
-            #region Paging
-            var pager = Pager.BuildPager(filterUser.PageId, filterUser.HowManyShowPageAfterAndBefore, await query.CountAsync(),
-                                                    filterUser.TakeEntity);
-            var allEntites = await query.Paging(pager).ToListAsync();
-            #endregion
-
-
-            return filterUser.SetEntity(allEntites).SetPaging(pager);
-        }
         #endregion
 
 
@@ -127,9 +134,11 @@ namespace MyCRM.Data.Repository
         #endregion
 
         //Save
+        #region Save
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
+        #endregion
     }
 }

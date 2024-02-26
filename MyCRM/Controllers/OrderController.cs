@@ -74,7 +74,7 @@ namespace MyCRM.Controllers
         public async Task<IActionResult> EditeOrder(long orderId)
         {
             var result = await _orderService.FillEditeOrderModel(orderId);
-            ViewBag.customer = await _userService.FillEditeCustomerViewModel(result.CustomerId);
+            ViewBag.customer = await _userService.GetCustomerById(result.CustomerId);
             return View(result);
         }
 

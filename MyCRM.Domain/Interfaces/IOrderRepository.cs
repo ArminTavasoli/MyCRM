@@ -1,4 +1,7 @@
-﻿using MyCRM.Domain.Entities.Orders;
+﻿using Microsoft.AspNetCore.Http;
+using MyCRM.Domain.Entities.Orders;
+using MyCRM.Domain.ViewModel.Order;
+using MyCRM.Domain.ViewModel.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +18,7 @@ namespace MyCRM.Domain.Interfaces
 
         Task AddOrder(Order order);
 
-        Task UpdateOrder(Order order);  
+        Task UpdateOrder(Order order);
 
         Task SaveChange();
     }

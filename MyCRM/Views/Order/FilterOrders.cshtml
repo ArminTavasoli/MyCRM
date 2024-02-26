@@ -1,5 +1,6 @@
 ﻿@using MyCRM.Application.Convertors
 @using MyCRM.Application.Extensions
+@using MyCRM.Application.StaticTools
 @using MyCRM.Domain.ViewModel.Order
 @model FilterOrderViewModel
 @{
@@ -53,6 +54,7 @@
                 <table id="example3" class="table table-responsive-md tc">
                     <thead>
                         <tr role="row">
+                            <th>پروفایل</th>
                             <th>نام مشتری</th>
                             <th>عنوان</th>
                             <th>تاریخ</th>
@@ -66,6 +68,16 @@
                             @foreach (var order in Model.Orders)
                             {
                                 <tr role="row" class="odd">
+                                    <td class="">
+                                        @if (string.IsNullOrEmpty(order.ImageName))
+                                        {
+                                            <img class="rounded-circle" width="35" src="@FilePath.UserProfileDefault@order.ImageName" alt="" />
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" width="35" src="@FilePath.UploadImageProfile@order.ImageName" alt="" />
+                                        }
+                                    </td>
                                     <td>
                                         <p>@order.Customer.User.GetUserShowName()</p>
                                     </td>
@@ -97,6 +109,7 @@
                                     </td>
                                     <td>
                                         <div class="d-flex">
+                                            <a asp-controller="Order" asp-action="EditeOrder" asp-route-orderId="@order.OrderId" class="btn btn-warning shadow btn-xs sharp"><i class="fa fa-edit text-white"></i></a>
                                             <a class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash text-white"></i></a>
                                         </div>
                                     </td>

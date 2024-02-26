@@ -43,6 +43,7 @@ namespace MyCRM.Data.Repository
         public async Task<IQueryable<Order>> GetOrders()
         {
             return _context.Orders
+                .OrderByDescending(o => o.CreateDate) 
                 .Include(o => o.Customer)
                 .ThenInclude(o => o.User).AsQueryable();
         }
