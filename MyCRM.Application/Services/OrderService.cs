@@ -35,6 +35,8 @@ namespace MyCRM.Application.Services
             var query = await _orderRepository.GetOrders();
 
             #region Filter
+            query = query.Where(o => !o.IsDelete);
+
             if (!string.IsNullOrEmpty(filterOrder.FilterCustomerName))
             {
                 query = query.Where(a =>
