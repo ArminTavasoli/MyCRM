@@ -19,5 +19,7 @@ namespace MyCRM.Application.Interfaces
         Task<EditeOrderResult> EditeOrder(EditeOrderViewModel editeOrder, IFormFile orderImage);
 
         Task<bool> DeleteOrder(long orderId);
+
+        Task<AddOrderSelectMarketerResult> AddOrderSelectMarketer(OrderSelectMarketerViewModel orderSelectMarketerView , long userId);
     }
 }

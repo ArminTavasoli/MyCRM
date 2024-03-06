@@ -21,10 +21,12 @@ namespace MyCRM.Data.Repository
         }
         #endregion
 
+        #region Order
+
         //Get Order with Id
         public async Task<Order> GetOrderById(long orderId)
         {
-           return await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
+            return await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderId);
         }
 
         //Add Order
@@ -36,24 +38,38 @@ namespace MyCRM.Data.Repository
         //Edite Order
         public async Task UpdateOrder(Order order)
         {
-             _context.Orders.Update(order);
+            _context.Orders.Update(order);
         }
 
 
         public async Task<IQueryable<Order>> GetOrders()
         {
             return _context.Orders
-                .OrderByDescending(o => o.CreateDate) 
+                .OrderByDescending(o => o.CreateDate)
                 .Include(o => o.Customer)
                 .ThenInclude(o => o.User).AsQueryable();
         }
+        #endregion
+
+        #region Order Select Marketer
+        //Add Order Select Marketer
+        public async Task AddOrderSelectMarketer(OrderSelectedMarketer orderSelectMarketer)
+        {
+            await _context.OrderSelectedMarketers.AddAsync(orderSelectMarketer);
+        }
+
+        //Get Order Select Markerter
+        public async Task<IQueryable<OrderSelectedMarketer>> GetOrderSelectedMarketers()
+        {
+            return  _context.OrderSelectedMarketers.AsQueryable();
+        }
+        #endregion
 
         //Save
         public async Task SaveChange()
         {
             await _context.SaveChangesAsync();
         }
-
 
     }
 }

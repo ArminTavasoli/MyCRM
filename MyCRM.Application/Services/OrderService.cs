@@ -62,7 +62,7 @@ namespace MyCRM.Application.Services
 
         #region Create Order
         //Add Order
-        public async Task<CreateOrderResult> CreateOrder(CreateOrderViewModel createOrderViewModel, IFormFile imageProfile)
+        public async Task<CreateOrderResult> CreateOrder(CreateOrderViewModel createOrderViewModel, IFormFile? imageProfile)
         {
             var imageProfileName = "";
 
@@ -167,6 +167,44 @@ namespace MyCRM.Application.Services
             return true;
         }
         #endregion
+
+
+        #region Order select Marketer
+
+        //Add Order Select Marketer
+        public async Task<AddOrderSelectMarketerResult> AddOrderSelectMarketer(OrderSelectMarketerViewModel orderSelectMarketer , long userId)
+        {
+            var order = await _orderRepository.GetOrderById(orderSelectMarketer.OrderId);
+            if (order == null)
+            {
+                return AddOrderSelectMarketerResult.Fail;
+            }
+
+            var selectMarketerQueryable = await _orderRepository.GetOrderSelectedMarketers();
+            if(selectMarketerQueryable.Any(m => m.OrderId == order.OrderId && !m.IsDelete))
+            {
+                return AddOrderSelectMarketerResult.SelectMarketerExist;
+            }
+
+            var selectMarketer = new OrderSelectedMarketer()
+            {
+                OrderId = orderSelectMarketer.OrderId,
+                Description = orderSelectMarketer.Description ,
+                MarketerId = orderSelectMarketer.MarketerId ,
+                ModifyUserId = userId
+
+            };
+
+            await _orderRepository.AddOrderSelectMarketer(selectMarketer);
+            await _orderRepository.SaveChange();
+
+            return AddOrderSelectMarketerResult.Success;
+        }
+
+        #endregion
+
+
+
 
 
     }

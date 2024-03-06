@@ -108,7 +108,10 @@ namespace MyCRM.Data.Repository
             return await _context.Marketers.FirstOrDefaultAsync(m => m.UserID == marketerId);
         }
 
-
+        public async Task<IQueryable<Marketer>> GetMarketerQueryable()
+        {
+            return _context.Marketers.Include(m => m.User).AsQueryable();
+        }
 
         #endregion
 
@@ -124,7 +127,7 @@ namespace MyCRM.Data.Repository
         {
             return await _context.Customers
                 .Include(c => c.User)
-                .FirstAsync(c => c.UserID == customerId);
+                .FirstOrDefaultAsync(c => c.UserID == customerId);
         }
 
         public async Task UpdateCustomer(Customer customer)

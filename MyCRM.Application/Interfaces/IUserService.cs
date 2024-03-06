@@ -16,7 +16,7 @@ namespace MyCRM.Application.Interfaces
         Task<EditeMarketerViewModle> GetMarketerforEdite(long UserId);
         Task<EditeMarketerResult> EditeMarketer(EditeMarketerViewModle editeMarketer, IFormFile imageProfile);
 
-        //Filter
+        //Filter User
         Task<FilterUserViewModel> Filter (FilterUserViewModel filter);
         
         
@@ -25,6 +25,7 @@ namespace MyCRM.Application.Interfaces
         Task<EditeCustomerViewModel> FillEditeCustomerViewModel(long UserId);
         Task<EditeCustomerResult> EditeCustomer(EditeCustomerViewModel editeCustomer , IFormFile imageProfile);
         Task<Customer> GetCustomerById(long CustomerId);
+        Task<List<Marketer>> GetMarketerList();
 
     }
 }
