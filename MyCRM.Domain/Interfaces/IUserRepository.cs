@@ -21,6 +21,7 @@ namespace MyCRM.Domain.Interfaces
         Task AddMarketerAsync(Marketer marketer);
         Task UpdateMarketerAsync(Marketer marketer);
         Task<Marketer> GetMarketerById(long marketerId);
+        Task<IQueryable<Marketer>> GetMarketerQueryable();
 
 
         //Customer

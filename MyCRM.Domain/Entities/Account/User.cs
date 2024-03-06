@@ -40,7 +40,7 @@ namespace MyCRM.Domain.Entities.Account
 
         [Display(Name = "نام تصویر")]
         [MaxLength(100, ErrorMessage = "لطفا تعداد کارکتر خود را کم کنید")]
-        public string ImageName { get; set; } = string.Empty;
+        public string? ImageName { get; set; } 
 
 
         [Display(Name = "شماره تلفن")]

@@ -19,13 +19,16 @@ namespace MyCRM.Application.Services
 {
     public class UserServices : IUserService
     {
+        #region Ctor
         private readonly IUserRepository _userRepositort;
 
         public UserServices(IUserRepository userRepository)
         {
             this._userRepositort = userRepository;
         }
+        #endregion
 
+        #region Create Marketer
         //Create Marketer
         public async Task<AddMarketerResult> AddMarketer(AddMarketerViewModel marketer , IFormFile imageProfile)
         {
@@ -76,13 +79,18 @@ namespace MyCRM.Application.Services
             return AddMarketerResult.Success;
             
         }
+        #endregion
 
+
+        #region Filter User
         //Filter
         public async Task<FilterUserViewModel> Filter(FilterUserViewModel filter)
         {
             return await _userRepositort.filterUser(filter);
         }
+        #endregion
 
+        #region Edite Marketer
         //Get User For Edite
         public async Task<EditeMarketerViewModle> GetMarketerforEdite(long UserId)
         {
@@ -162,7 +170,11 @@ namespace MyCRM.Application.Services
 
             return EditeMarketerResult.Success;
         }
+        #endregion
 
+
+
+        #region Create Customer
         //Create Customer
         public async Task<AddCustomerResult> AddCustomer(AddCustomerViewModel newCustomer, IFormFile imageProfile)
         {
@@ -209,7 +221,10 @@ namespace MyCRM.Application.Services
             return AddCustomerResult.Success;
 
         }
+        #endregion
 
+
+        #region Edite Customer
         //Get Customer for Edite
         public async Task<EditeCustomerViewModel> FillEditeCustomerViewModel(long UserId)
         {
@@ -284,11 +299,22 @@ namespace MyCRM.Application.Services
             return EditeCustomerResult.Success;
 
         }
+        #endregion
 
+
+
+        #region Get Customer By ID
         //Get Customer with Id
         public async Task<Customer> GetCustomerById(long CustomerId)
         {
            return await _userRepositort.GetCustomerWithId(CustomerId);
+        }
+        #endregion
+
+        public async Task<List<Marketer>> GetMarketerList()
+        {
+            var marketers = await _userRepositort.GetMarketerQueryable();
+            return marketers.ToList();
         }
     }
 }

@@ -20,6 +20,12 @@ namespace MyCRM.Domain.Interfaces
 
         Task UpdateOrder(Order order);
 
+        #region Order Select Marketer
+        Task AddOrderSelectMarketer(OrderSelectedMarketer orderSelectMarketer);
+
+        Task <IQueryable<OrderSelectedMarketer>> GetOrderSelectedMarketers();
+        #endregion
+
         Task SaveChange();
     }
 }
