@@ -87,6 +87,11 @@ namespace MyCRM.Data.Repository
         {
             _context.Users.Update(user);
         }
+
+        public async Task<IQueryable<User>> GetUserQueryable()
+        {
+            return _context.Users.AsQueryable();
+        }
         #endregion
 
 

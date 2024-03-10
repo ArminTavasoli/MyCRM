@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MyCRM.Domain.Entities.Account;
+using MyCRM.Domain.ViewModel.Account;
 using MyCRM.Domain.ViewModel.User;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,11 @@ namespace MyCRM.Application.Interfaces
         Task<EditeCustomerResult> EditeCustomer(EditeCustomerViewModel editeCustomer , IFormFile imageProfile);
         Task<Customer> GetCustomerById(long CustomerId);
         Task<List<Marketer>> GetMarketerList();
+
+
+        //Login
+        Task<LoginUserResult> LoginUser(LoginUserViewModel loginViewModel);
+        Task<User> GetUserByUserName(string userName);
 
     }
 }

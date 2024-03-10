@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MyCrm.Application.Extensions;
 using MyCRM.Application.Extensions;
 using MyCRM.Application.Interfaces;
@@ -6,6 +7,7 @@ using MyCRM.Application.Security;
 using MyCRM.Application.StaticTools;
 using MyCRM.Domain.Entities.Account;
 using MyCRM.Domain.Interfaces;
+using MyCRM.Domain.ViewModel.Account;
 using MyCRM.Domain.ViewModel.User;
 using System;
 using System.Collections.Generic;
@@ -30,17 +32,17 @@ namespace MyCRM.Application.Services
 
         #region Create Marketer
         //Create Marketer
-        public async Task<AddMarketerResult> AddMarketer(AddMarketerViewModel marketer , IFormFile imageProfile)
+        public async Task<AddMarketerResult> AddMarketer(AddMarketerViewModel marketer, IFormFile imageProfile)
         {
             //Upload Image
             var imageProfileName = "";
 
-            if(imageProfile?.Length > 0 )
+            if (imageProfile?.Length > 0)
             {
                 imageProfileName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(imageProfile.FileName);
-                 imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
+                imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
             }
-          
+
             //Add User
             var user = new User()
             {
@@ -48,7 +50,7 @@ namespace MyCRM.Application.Services
                 LastName = marketer.LastName,
                 UserName = marketer.UserName,
                 Password = PasswordHelper.EncodePasswordMd5(marketer.Password),
-                Email = marketer.Email, 
+                Email = marketer.Email,
                 MobilePhone = marketer.MobilePhone,
                 IntroduceName = marketer.IntroduceName,
             };
@@ -77,7 +79,7 @@ namespace MyCRM.Application.Services
 
 
             return AddMarketerResult.Success;
-            
+
         }
         #endregion
 
@@ -95,7 +97,7 @@ namespace MyCRM.Application.Services
         public async Task<EditeMarketerViewModle> GetMarketerforEdite(long UserId)
         {
             var user = await _userRepositort.GetUserDetailById(UserId);
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -123,19 +125,19 @@ namespace MyCRM.Application.Services
 
 
         //Edite Marketer
-        public async Task<EditeMarketerResult> EditeMarketer(EditeMarketerViewModle marketerEdite , IFormFile imageProfile)
+        public async Task<EditeMarketerResult> EditeMarketer(EditeMarketerViewModle marketerEdite, IFormFile imageProfile)
         {
             var userEdite = await _userRepositort.GetUserDetailById(marketerEdite.UserId);
-            if(userEdite == null)
+            if (userEdite == null)
             {
                 return EditeMarketerResult.Faild;
             }
 
             var imageProfileName = "";
-            if(imageProfile?.Length > 0)
+            if (imageProfile?.Length > 0)
             {
                 imageProfileName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(imageProfile.FileName);
-                imageProfile.AddImageToServer(imageProfileName , FilePath.UploadImageProfileServer, 280, 280);
+                imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
             }
 
             userEdite.Email = marketerEdite.Email;
@@ -145,9 +147,9 @@ namespace MyCRM.Application.Services
             userEdite.MobilePhone = marketerEdite.MobilePhone;
             userEdite.UserName = marketerEdite.UserName;
 
-            if(!string.IsNullOrEmpty(imageProfileName))
+            if (!string.IsNullOrEmpty(imageProfileName))
             {
-                userEdite.ImageName = imageProfileName; 
+                userEdite.ImageName = imageProfileName;
             }
 
             await _userRepositort.UpdateUser(userEdite);
@@ -159,7 +161,7 @@ namespace MyCRM.Application.Services
             MyMarketer.FieldStudy = marketerEdite.FieldStudy;
             MyMarketer.IrCode = marketerEdite.IrCode;
 
-            if(MyMarketer == null)
+            if (MyMarketer == null)
             {
                 return EditeMarketerResult.Faild;
             }
@@ -213,7 +215,7 @@ namespace MyCRM.Application.Services
                 UserID = user.UserID,
                 Job = newCustomer.Job,
                 CompanyName = newCustomer.CompanyName
-            }; 
+            };
 
             await _userRepositort.AddCustomer(customer);
             await _userRepositort.SaveChangesAsync();
@@ -229,7 +231,7 @@ namespace MyCRM.Application.Services
         public async Task<EditeCustomerViewModel> FillEditeCustomerViewModel(long UserId)
         {
             var customer = await _userRepositort.GetCustomerWithId(UserId);
-            if(customer == null)
+            if (customer == null)
             {
                 return null;
             }
@@ -245,9 +247,9 @@ namespace MyCRM.Application.Services
                 LastName = user.LastName,
                 IntroduceName = user.IntroduceName,
                 Email = user.Email,
-                MobilePhone = user.MobilePhone ,
-                ImageName = user.ImageName ,
-                UserName = user.UserName               
+                MobilePhone = user.MobilePhone,
+                ImageName = user.ImageName,
+                UserName = user.UserName
             };
             return result;
         }
@@ -256,19 +258,19 @@ namespace MyCRM.Application.Services
         public async Task<EditeCustomerResult> EditeCustomer(EditeCustomerViewModel editeCustomer, IFormFile imageProfile)
         {
             var customer = await _userRepositort.GetCustomerWithId(editeCustomer.UserId);
-            if(customer == null)
+            if (customer == null)
             {
                 return EditeCustomerResult.Fail;
             }
 
             var user = await _userRepositort.GetUserWithID(editeCustomer.UserId);
-            if(user == null)
+            if (user == null)
             {
                 return EditeCustomerResult.Fail;
             }
 
             var imageProfileName = "";
-            if(imageProfile?.Length > 0)
+            if (imageProfile?.Length > 0)
             {
                 imageProfileName = CodeGenerator.GenerateUniqCode() + Path.GetExtension(imageProfile.FileName);
                 imageProfile.AddImageToServer(imageProfileName, FilePath.UploadImageProfileServer, 280, 280);
@@ -307,14 +309,43 @@ namespace MyCRM.Application.Services
         //Get Customer with Id
         public async Task<Customer> GetCustomerById(long CustomerId)
         {
-           return await _userRepositort.GetCustomerWithId(CustomerId);
+            return await _userRepositort.GetCustomerWithId(CustomerId);
         }
         #endregion
 
+        #region Get MarketerList
         public async Task<List<Marketer>> GetMarketerList()
         {
             var marketers = await _userRepositort.GetMarketerQueryable();
             return marketers.ToList();
+        }
+        #endregion
+
+
+        public async Task<LoginUserResult> LoginUser(LoginUserViewModel loginViewModel)
+        {
+            var userList = await _userRepositort.GetUserQueryable();
+            var user = await userList.FirstOrDefaultAsync(u => u.UserName == loginViewModel.UserName);
+
+            if (user == null)
+            {
+                return LoginUserResult.NotFound;
+            }
+
+            if (user.Password != PasswordHelper.EncodePasswordMd5(loginViewModel.Password))
+            {
+                return LoginUserResult.PasswordNotCorrect;
+            }
+
+            return LoginUserResult.Success;
+        }
+
+        public async Task<User> GetUserByUserName(string userName)
+        {
+            var userList = await _userRepositort.GetUserQueryable();
+            var user = userList.FirstOrDefault(u => u.UserName == userName);
+
+            return user;
         }
     }
 }

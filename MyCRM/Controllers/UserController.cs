@@ -27,6 +27,7 @@ namespace MyCRM.Controllers
         #endregion
 
         #region Create User
+
         #region Create Customer
         //Create Customer
         [HttpGet]
@@ -101,6 +102,7 @@ namespace MyCRM.Controllers
         #endregion Create User
 
         #region Edite User
+
         #region EditeMarketer
         [HttpGet]
         public async Task<IActionResult> EditeMarketer(long Id)
@@ -170,6 +172,7 @@ namespace MyCRM.Controllers
             return View(editeMarketer);
         }
         #endregion
+
         #endregion
 
     }
