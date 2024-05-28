@@ -321,7 +321,8 @@ namespace MyCRM.Application.Services
         }
         #endregion
 
-
+        #region Login
+        //Login User
         public async Task<LoginUserResult> LoginUser(LoginUserViewModel loginViewModel)
         {
             var userList = await _userRepositort.GetUserQueryable();
@@ -340,6 +341,7 @@ namespace MyCRM.Application.Services
             return LoginUserResult.Success;
         }
 
+        //Get User with UserName
         public async Task<User> GetUserByUserName(string userName)
         {
             var userList = await _userRepositort.GetUserQueryable();
@@ -347,5 +349,6 @@ namespace MyCRM.Application.Services
 
             return user;
         }
+        #endregion
     }
 }
