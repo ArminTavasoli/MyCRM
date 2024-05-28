@@ -33,11 +33,13 @@ builder.Services.AddTransient<IOrderRepository , OrderRepository>();
 builder.Services.TryAddTransient<IOrderService , OrderService>();
 #endregion
 
+
 //Encoder
 #region Encoder
 builder.Services.AddSingleton<HtmlEncoder>(
     HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 #endregion
+
 
 //DbContext
 #region DbContext

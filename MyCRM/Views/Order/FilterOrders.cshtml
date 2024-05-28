@@ -30,8 +30,41 @@
             });
         }
 
+        function SubmitForm() {
+            var sendData = $('#SelectedMarketerForm').serializeArray().reduce(function (obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            },
+                {});
+
+
+            var form_data = new FormData();
+
+            for (var key in sendData) {
+                form_data.append(key, sendData[key]);
+            }
+
+            $.ajax({
+                url: "/Order/SelectMarketerModal",
+                type: "POST",
+                data: form_data,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+
+                },
+                success: function (response) {
+                    debugger
+                    SelectOrderMarketerDone(response);
+                },
+                error: function () {
+
+                }
+            });
+        }
+
         function SelectOrderMarketerDone(response) {
-            if (response.status === "success") {
+            if (response.status === "Success") {
                 ShowMessage("اعلان", "عملیات با موفقیت انجام شد", "success");
                 $("#basicModal").modal("hide");
             }
@@ -39,7 +72,7 @@
                 ShowMessage("اعلان", "قبلا بازاریاب داشته است", "warning");
                 $("#basicModal").modal("hide");
             } else {
-                ShowMessage("اعلان", "عملیات با شکست مواجه شد", "errror");
+                ShowMessage("اعلان", "خطا", "error");
             }
         }
     </script>
@@ -166,8 +199,8 @@
 
 <div class="modal fade" id="basicModal">
     <div class="modal-dialog" role="document">
-        <form asp-controller="Order" asp-action="SelectMarketerModal" method="post"
-              data-ajax="true" data-ajax-method="post" data-ajax-success="SelectOrderMarketerDone">
+
+        <form asp-controller="Order" asp-action="SelectMarketerModal" method="post" id="SelectedMarketerForm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">انتخاب بازاریاب</h5>
@@ -178,10 +211,9 @@
                 <div class="modal-body" id="content">
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success light">ثبت</button>
+                    <button type="button" onclick="SubmitForm()" class="btn btn-success light">ثبت</button>
                 </div>
             </div>
         </form>
-
     </div>
 </div>
